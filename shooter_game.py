@@ -21,8 +21,8 @@ background_color = (25,0,0)
 game_is_running = True
 
 # player
-player_1 = Soldier(char_type="player", x_pos=400, y_pos=400, scale=2, speed=5)
-enemy_1 = Soldier(char_type="enemy", x_pos=400, y_pos=400, scale=2, speed=5)
+player_1 = Soldier(char_type="player", x_pos=400, y_pos=400, scale=2, speed=5, ammo = 10)
+enemy_1 = Soldier(char_type="enemy", x_pos=400, y_pos=400, scale=2, speed=5, ammo = 10)
 
 # create sprite bullet group
 bullet_group = pygame.sprite.Group()

@@ -6,7 +6,7 @@ pygame.init()
 max_acceleration_in_seconds = 0.5
 GRAVITY = 0.5
 class Soldier(pygame.sprite.Sprite):
-    def __init__(self, char_type, x_pos, y_pos, scale, speed):
+    def __init__(self, char_type, x_pos, y_pos, scale, speed, ammo):
         super().__init__()
 
         self.is_alive = True
@@ -30,6 +30,10 @@ class Soldier(pygame.sprite.Sprite):
 
         self.shoot = False
         self.shoot_cooldown = 0
+        #we manipulate this in game by reucing it and increasing it
+        self.ammo = ammo
+        #if player dies we set the ammo back to the original ammo count for a fresh start
+        self.start_ammo = self.ammo
 
         self.animation_list = []
         self.frame_index = 0
@@ -144,10 +148,12 @@ class Soldier(pygame.sprite.Sprite):
 
     def shoot_a_bullet(self, screen_width, bullet_group):
         #the lower the number the faster you can shoot
-        if self.shoot_cooldown == 0:
-
-            self.shoot_cooldown = 15
+        if self.shoot_cooldown == 0 and self.ammo > 0:
             
+            self.shoot_cooldown = 15
+            #reduce ammo by one
+            self.ammo -= 1
+
             bullet = Bullet(self.rect.centerx + (self.rect.size[0] * 0.6 * self.direction), self.rect.centery, self.direction, screen_width)
                 
             self.shoot = False
