@@ -39,7 +39,8 @@ while game_is_running:
     if player_1.is_alive:
         if player_1.shoot:
             
-            bullet_group.add(player_1.shoot_a_bullet(screen_width=SCREEN_WIDTH))
+
+            player_1.shoot_a_bullet(screen_width=SCREEN_WIDTH, bullet_group=bullet_group)
 
         if player_1.is_airborne:
             player_1.update_action(2)
@@ -50,7 +51,7 @@ while game_is_running:
     
 
         player_1.move()
-    player_1.update_animation()
+    player_1.update_player()
     player_1.draw(screen)
 
 

@@ -27,8 +27,9 @@ class Soldier(pygame.sprite.Sprite):
 
         self.moving_right = False
         self.moving_left = False
-        self.shoot = False
 
+        self.shoot = False
+        self.shoot_cooldown = 0
 
         self.animation_list = []
         self.frame_index = 0
@@ -86,6 +87,12 @@ class Soldier(pygame.sprite.Sprite):
             if self.frame_index >= len(self.animation_list[self.action]):
                 self.frame_index = 0
 
+    def update_player(self):
+        self.update_animation()
+        #update bullet cooldown
+        if self.shoot_cooldown > 0:
+            self.shoot_cooldown -= 1
+
     def move(self):
         target_speed = 0
         dx = 0
@@ -135,8 +142,13 @@ class Soldier(pygame.sprite.Sprite):
     def draw(self, screen):
         screen.blit(pygame.transform.flip(self.image, self.flip, False), self.rect)
 
-    def shoot_a_bullet(self, screen_width):
-        bullet = Bullet(self.rect.centerx + (self.rect.size[0] * 0.6 * self.direction), self.rect.centery, self.direction, screen_width)
+    def shoot_a_bullet(self, screen_width, bullet_group):
+        #the lower the number the faster you can shoot
+        if self.shoot_cooldown == 0:
+
+            self.shoot_cooldown = 15
             
-        self.shoot = False
-        return bullet
+            bullet = Bullet(self.rect.centerx + (self.rect.size[0] * 0.6 * self.direction), self.rect.centery, self.direction, screen_width)
+                
+            self.shoot = False
+            bullet_group.add(bullet)
