@@ -92,7 +92,11 @@ class Soldier(pygame.sprite.Sprite):
             self.frame_index += 1
 
             if self.frame_index >= len(self.animation_list[self.action]):
-                self.frame_index = 0
+                if self.action == 3:
+                    self.frame_index = len(self.animation_list[self.action]) - 1
+                else:
+
+                    self.frame_index = 0
 
     def update_soldier(self):
         self.update_animation()
